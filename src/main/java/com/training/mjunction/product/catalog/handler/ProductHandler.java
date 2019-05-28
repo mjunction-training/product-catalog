@@ -13,10 +13,12 @@ import org.springframework.web.reactive.function.server.ServerResponse;
 import com.training.mjunction.product.catalog.data.documents.Product;
 import com.training.mjunction.product.catalog.data.repository.ReactiveProductRepository;
 
+import lombok.extern.log4j.Log4j2;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 @Component
+@Log4j2
 public class ProductHandler {
 
 	@Autowired
@@ -107,9 +109,14 @@ public class ProductHandler {
 	 */
 	public Mono<ServerResponse> postProduct(final ServerRequest request) {
 
+		log.error("saving product");
+
 		final Mono<Product> monoProduct = request.bodyToMono(Product.class);
 
-		return ServerResponse.ok().build(monoProduct.doOnNext(productRepository::save).then());
+		return ServerResponse.ok().build(monoProduct.flatMap(p -> {
+			log.error(p);
+			return productRepository.save(p);
+		}).then());
 
 	}
 

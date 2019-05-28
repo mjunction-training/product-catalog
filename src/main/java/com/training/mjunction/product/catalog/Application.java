@@ -10,7 +10,6 @@ import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.cloud.netflix.hystrix.EnableHystrix;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
-import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.web.reactive.config.EnableWebFlux;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
@@ -21,7 +20,6 @@ import lombok.extern.log4j.Log4j2;
 @Log4j2
 @SpringBootApplication
 @EnableAutoConfiguration
-@EnableTransactionManagement
 @EnableDiscoveryClient
 @EnableHystrix
 @EnableWebFlux
