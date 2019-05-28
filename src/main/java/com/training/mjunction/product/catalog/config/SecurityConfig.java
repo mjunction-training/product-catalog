@@ -1,8 +1,6 @@
 package com.training.mjunction.product.catalog.config;
 
 import org.springframework.boot.actuate.autoconfigure.security.reactive.EndpointRequest;
-import org.springframework.boot.actuate.health.HealthEndpoint;
-import org.springframework.boot.actuate.info.InfoEndpoint;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.method.configuration.EnableReactiveMethodSecurity;
@@ -26,21 +24,18 @@ import reactor.core.publisher.Mono;
 public class SecurityConfig {
 
 	@Bean
+	@SuppressWarnings("deprecation")
 	public MapReactiveUserDetailsService userDetailsService() {
 		return new MapReactiveUserDetailsService(
-				User.withUsername("user").password("{noop}user").roles("USER").build());
+				User.withDefaultPasswordEncoder().username("user").password("user").roles("USER").build());
 	}
 
 	@Bean
 	public SecurityWebFilterChain springSecurityFilterChain(final ServerHttpSecurity http) {
-		http.authorizeExchange().matchers(EndpointRequest.to(InfoEndpoint.class, HealthEndpoint.class)).permitAll()
-				.matchers(EndpointRequest.toAnyEndpoint()).hasRole("USER").pathMatchers("/api/**").permitAll()
-				.anyExchange().authenticated();
-		http.csrf().disable();
-		http.logout().disable();
-		http.addFilterAt(new CORSFilter(), SecurityWebFiltersOrder.CSRF);
-		http.headers().cache().disable();
-		return http.build();
+		return http.addFilterAt(new CORSFilter(), SecurityWebFiltersOrder.CSRF).csrf().disable().authorizeExchange()
+				.matchers(EndpointRequest.toAnyEndpoint()).permitAll()
+				.pathMatchers("/actuator/**", "/js/**", "/css/**", "/*.html", "/*.htm", "/*.jsp").permitAll()
+				.anyExchange().authenticated().and().logout().disable().httpBasic().and().build();
 	}
 
 	public static final class CORSFilter implements WebFilter {
