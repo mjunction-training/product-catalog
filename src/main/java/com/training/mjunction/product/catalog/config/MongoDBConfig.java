@@ -5,11 +5,11 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.mongodb.MongoDbFactory;
 import org.springframework.data.mongodb.MongoTransactionManager;
-import org.springframework.data.mongodb.core.ReactiveMongoTemplate;
+import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
 
-import com.mongodb.reactivestreams.client.MongoClient;
-import com.mongodb.reactivestreams.client.MongoClients;
+import com.mongodb.client.MongoClient;
+import com.mongodb.client.MongoClients;
 
 @Configuration
 @EnableMongoRepositories(basePackages = "com.training.mjunction.product.catalog.data")
@@ -27,9 +27,9 @@ public class MongoDBConfig {
 	}
 
 	@Bean
-	public ReactiveMongoTemplate reactiveMongoTemplate(@Value("${mongodb.db.name:product}") final String databaseName,
+	public MongoTemplate mongoTemplate(@Value("${mongodb.db.name:product}") final String databaseName,
 			final MongoClient mongoClient) {
-		return new ReactiveMongoTemplate(mongoClient, databaseName);
+		return new MongoTemplate(mongoClient, databaseName);
 	}
 
 }

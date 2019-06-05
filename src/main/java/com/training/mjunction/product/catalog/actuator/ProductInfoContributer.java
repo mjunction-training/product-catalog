@@ -12,10 +12,10 @@ import org.springframework.stereotype.Component;
  * Note: It's completely optional for applications if it doesn't need to do anything extra for default health other than spring health endpoint.
  */
 @Component
-public class UserSvcsInfoContributer extends GitInfoContributor {
+public class ProductInfoContributer extends GitInfoContributor {
 
 	@Autowired
-	public UserSvcsInfoContributer(final GitProperties properties) {
+	public ProductInfoContributer(final GitProperties properties) {
 		super(properties);
 	}
 

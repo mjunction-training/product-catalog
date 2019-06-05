@@ -1,7 +1,6 @@
 package com.training.mjunction.product.catalog;
 
 import org.springframework.boot.SpringApplication;
-import org.springframework.boot.WebApplicationType;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
@@ -10,7 +9,6 @@ import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.cloud.netflix.hystrix.EnableHystrix;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
-import org.springframework.web.reactive.config.EnableWebFlux;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
@@ -22,7 +20,6 @@ import lombok.extern.log4j.Log4j2;
 @EnableAutoConfiguration
 @EnableDiscoveryClient
 @EnableHystrix
-@EnableWebFlux
 @ComponentScan(basePackages = "com.training.mjunction.product.catalog")
 public class Application extends SpringBootServletInitializer {
 
@@ -34,9 +31,7 @@ public class Application extends SpringBootServletInitializer {
 
 	public static void main(final String[] args) {
 		log.info("Starting application user-svcs");
-		final SpringApplication app = new SpringApplication(Application.class);
-		app.setWebApplicationType(WebApplicationType.REACTIVE);
-		app.run(args);
+		SpringApplication.run(Application.class, args);
 	}
 
 	@Bean
