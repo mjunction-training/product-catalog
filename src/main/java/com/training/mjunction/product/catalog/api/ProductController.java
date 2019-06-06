@@ -29,14 +29,14 @@ public class ProductController {
 	private ProductRepository repository;
 
 	@Cacheable(key = "#name", unless = "#result != null")
-	@RequestMapping(method = RequestMethod.GET, value = "/products/{name}")
+	@RequestMapping(method = RequestMethod.GET, value = "/api/v1/products/{name}")
 	public Product findByName(@PathVariable("name") final String name) {
 		log.info(String.format("name(%s)", name));
 		return repository.findByName(name);
 	}
 
 	@Cacheable(key = "#category + #name", unless = "#result != null")
-	@RequestMapping(method = RequestMethod.GET, value = "/products/{category}/{name}")
+	@RequestMapping(method = RequestMethod.GET, value = "/api/v1/products/{category}/{name}")
 	public Product findByCategoryName(@PathVariable("category") final String category,
 			@PathVariable("name") final String name) {
 		log.info(String.format("name(%s) category(%s)", name, category));
@@ -44,21 +44,21 @@ public class ProductController {
 	}
 
 	@Cacheable(key = "all-products", unless = "#result != null")
-	@RequestMapping(method = RequestMethod.GET, value = "/products")
+	@RequestMapping(method = RequestMethod.GET, value = "/api/v1/products")
 	public List<Product> findAll() {
 		log.info("Product.findAll()");
 		return repository.findAll();
 	}
 
 	@CachePut(key = "#result.name", unless = "#result != null")
-	@RequestMapping(method = RequestMethod.PUT, value = "/products")
+	@RequestMapping(method = RequestMethod.PUT, value = "/api/v1/products")
 	public Product add(@RequestBody final Product product) {
 		log.info(String.format("Product.add(%s)", product));
 		return repository.save(product);
 	}
 
 	@CachePut(key = "#result.name", unless = "#result != null")
-	@RequestMapping(method = RequestMethod.POST, value = "/products/{name}")
+	@RequestMapping(method = RequestMethod.POST, value = "/api/v1/products/{name}")
 	public Product update(@PathVariable("name") final String name, @RequestBody final Product product) {
 
 		log.info(String.format("Product.add(%s)", product));
@@ -73,7 +73,7 @@ public class ProductController {
 	}
 
 	@CacheEvict(key = "#name", allEntries = false)
-	@RequestMapping(method = RequestMethod.DELETE, value = "/products/{name}")
+	@RequestMapping(method = RequestMethod.DELETE, value = "/api/v1/products/{name}")
 	public void delete(@PathVariable("name") final String name) {
 
 		log.info(String.format("Product.delete(%s)", name));
