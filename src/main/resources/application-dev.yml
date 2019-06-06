@@ -1,5 +1,27 @@
 spring:
   profiles: dev
+  cloud:
+    config:
+      discovery:
+        enabled: true
+        service-id: configserver
+      enabled: true 
+  zipkin:
+    discovery-client-enabled: true
+    service:
+      name: zipkin-server 
+  boot:
+    admin:
+      client:
+        username: "user"       #These two are needed so that the client
+        password: "user"   #can register at the protected server api
+        url:
+        - ${ADMIN_SERVER_URL:http://localhost:9090/}
+      
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: ${EUREKA_SERVER_URL:http://localhost:8761/eureka}
 
 # Logging
 logging:

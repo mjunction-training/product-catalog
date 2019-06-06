@@ -1,24 +1,2 @@
-spring:
-  cloud:
-    config:
-      discovery:
-        enabled: true
-      enabled: true 
-      uri: ${CONFIG_SERVER_URL:http://localhost:8888}  
-  zipkin:
-    base-url: http://localhost:9411/
-  boot:
-    admin:
-      client:
-        username: "user"       #These two are needed so that the client
-        password: "user"   #can register at the protected server api
-        url:
-        - http://localhost:9090/
-      
-eureka:
-  client:
-    serviceUrl:
-      defaultZone: ${EUREKA_SERVER_URL:http://localhost:8761/eureka}
-
 server:
   port: ${appPort:8081}

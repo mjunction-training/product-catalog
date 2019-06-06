@@ -1,5 +1,8 @@
 package com.training.mjunction.product.catalog.config;
 
+import java.util.Arrays;
+import java.util.HashSet;
+
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.annotation.Bean;
@@ -13,7 +16,7 @@ public class CacheConfig {
 
 	@Bean
 	public JedisConnectionFactory jedisConnectionFactory(@Value("${redis.host:localhost}") final String host,
-			@Value("${redis port:6379") final int port) {
+			@Value("${redis.port:6379") final int port) {
 		return new JedisConnectionFactory(new RedisStandaloneConfiguration(host, port));
 	}
 
@@ -28,7 +31,7 @@ public class CacheConfig {
 	@Bean
 	public RedisCacheManager cacheManager(final JedisConnectionFactory jedisConnectionFactory) {
 		return RedisCacheManager.builder(jedisConnectionFactory).disableCreateOnMissingCache().transactionAware()
-				.build();
+				.initialCacheNames(new HashSet<>(Arrays.asList("product_cache"))).build();
 	}
 
 }
