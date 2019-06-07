@@ -14,8 +14,8 @@ import com.mongodb.client.MongoClients;
 public class MongoDBConfig {
 
 	@Bean
-	public MongoClient mongoClient(@Value("${mongodb.db.host:localhost}") final String mongoDbHostName,
-			@Value("${mongodb.db.port:27017}") final int mongoDbPort) {
+	public MongoClient mongoClient(@Value("${mongodb.host:localhost}") final String mongoDbHostName,
+			@Value("${mongodb.port:27017}") final int mongoDbPort) {
 		return MongoClients.create(String.format("mongodb://%s:%d", mongoDbHostName, mongoDbPort));
 	}
 
