@@ -37,7 +37,7 @@ public class ProductController {
 
 	@Cacheable(key = "#category + #name", unless = "#result != null")
 	@RequestMapping(method = RequestMethod.GET, value = "/api/v1/products/{category}/{name}")
-	public Product findByCategoryName(@PathVariable("category") final String category,
+	public Product findByCategoryAndName(@PathVariable("category") final String category,
 			@PathVariable("name") final String name) {
 		log.info(String.format("name(%s) category(%s)", name, category));
 		return repository.findByNameAndCategory(name, category);

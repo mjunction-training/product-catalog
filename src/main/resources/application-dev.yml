@@ -14,9 +14,17 @@ spring:
     admin:
       client:
         username: "user"       #These two are needed so that the client
-        password: "user"   #can register at the protected server api
+        password: "password"   #can register at the protected server api
         url:
         - ${ADMIN_SERVER_URL:http://localhost:9090/}
+
+security:
+  oauth2:
+    resource:
+      jwt:
+        key-uri: http://localhost:8769/uaa/oauth/token_key
+      id: openid
+      serviceId: ${PREFIX:}resource
       
 eureka:
   client:
