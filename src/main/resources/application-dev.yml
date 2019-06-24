@@ -36,13 +36,17 @@ logging:
   pattern:
     console: "[%-5level] %date{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %logger{15}#%line %msg\n"
   level:
-    root: INFO
+    root: DEBUG
+    org.springframework.cache: DEBUG
+    org.springframework.data.redis: DEBUG
+    redis.client: DEBUG
     com.training.mjunction.usersvcs: ERROR
     org.springframework: ERROR
     org.hibernate: ERROR
     sun.rmi: ERROR
     org.reflections: ERROR
     sun.reflect: ERROR
+    org.apache: ERROR
     org.apache.coyote.http11: ERROR
     org.glassfish.jersey.internal.util: ERROR
     org.apache.tomcat.util.descriptor: ERROR

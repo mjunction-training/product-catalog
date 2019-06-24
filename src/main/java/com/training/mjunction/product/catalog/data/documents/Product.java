@@ -1,5 +1,6 @@
 package com.training.mjunction.product.catalog.data.documents;
 
+import java.io.Serializable;
 import java.util.UUID;
 
 import org.springframework.data.annotation.Id;
@@ -13,14 +14,13 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 import lombok.Data;
-import lombok.experimental.Accessors;
 
 @Data
-@Accessors(fluent = true)
 @Document(collection = "product")
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({ "id", "name", "category", "features" })
-public class Product {
+public class Product implements Serializable {
+	private static final long serialVersionUID = 1L;
 
 	@Id
 	@JsonProperty("id")
