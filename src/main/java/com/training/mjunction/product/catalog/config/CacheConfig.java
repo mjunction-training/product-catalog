@@ -40,7 +40,7 @@ public class CacheConfig {
 	@Bean
 	public RedisCacheManager cacheManager(final JedisConnectionFactory jedisConnectionFactory) {
 		return RedisCacheManager.builder(jedisConnectionFactory).disableCreateOnMissingCache().transactionAware()
-				.initialCacheNames(new HashSet<>(Arrays.asList("products"))).build();
+				.initialCacheNames(new HashSet<>(Arrays.asList("products_cache"))).build();
 	}
 
 	@Bean

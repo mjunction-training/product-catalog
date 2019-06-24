@@ -23,20 +23,20 @@ import lombok.extern.log4j.Log4j2;
 @Log4j2
 @RestController
 @Transactional
-@CacheConfig(cacheNames = "products", cacheManager = "cacheManager")
+@CacheConfig(cacheNames = "products_cache", cacheManager = "cacheManager")
 public class ProductController {
 
 	@Autowired
 	private ProductRepository repository;
 
-	@Caching(cacheable = @Cacheable(cacheNames = "products", key = "#name", unless = "#result == null"), put = @CachePut(cacheNames = "products", key = "#name", unless = "#result == null"))
+	@Caching(cacheable = @Cacheable(key = "#name", unless = "#result == null"), put = @CachePut(key = "#name", unless = "#result == null"))
 	@RequestMapping(method = RequestMethod.GET, value = "/api/v1/products/{name}")
 	public Product findByName(@PathVariable("name") final String name) {
 		log.info(String.format("name(%s)", name));
 		return repository.findByName(name);
 	}
 
-	@Caching(cacheable = @Cacheable(cacheNames = "products", key = "#name", unless = "#result == null"), put = @CachePut(cacheNames = "products", key = "#name", unless = "#result == null"))
+	@Caching(cacheable = @Cacheable(key = "#name", unless = "#result == null"), put = @CachePut(key = "#name", unless = "#result == null"))
 	@RequestMapping(method = RequestMethod.GET, value = "/api/v1/products/{category}/{name}")
 	public Product findByCategoryAndName(@PathVariable("category") final String category,
 			@PathVariable("name") final String name) {
@@ -44,8 +44,8 @@ public class ProductController {
 		return repository.findByNameAndCategory(name, category);
 	}
 
-	@Caching(cacheable = @Cacheable(cacheNames = "products", key = "#root.methodName", unless = "#result == null"), put = {
-			@CachePut(cacheNames = "products", key = "#root.methodName", unless = "#result == null") })
+	@Caching(cacheable = @Cacheable(key = "#root.methodName", unless = "#result == null"), put = {
+			@CachePut(key = "#root.methodName", unless = "#result == null") })
 	@RequestMapping(method = RequestMethod.GET, value = "/api/v1/products")
 	public List<Product> findAll() {
 
@@ -59,14 +59,14 @@ public class ProductController {
 
 	}
 
-	@Caching(put = @CachePut(cacheNames = "products", key = "#product.name", unless = "#result == null"))
+	@Caching(put = @CachePut(key = "#product.name", unless = "#result == null"))
 	@RequestMapping(method = RequestMethod.PUT, value = "/api/v1/products")
 	public Product add(@RequestBody final Product product) {
 		log.info(String.format("Product.add(%s)", product));
 		return repository.save(product);
 	}
 
-	@Caching(put = @CachePut(cacheNames = "products", key = "#name", unless = "#result == null"))
+	@Caching(put = @CachePut(key = "#name", unless = "#result == null"))
 	@RequestMapping(method = RequestMethod.POST, value = "/api/v1/products/{name}")
 	public Product update(@PathVariable("name") final String name, @RequestBody final Product product) {
 
@@ -85,7 +85,7 @@ public class ProductController {
 		return repository.save(dbOne);
 	}
 
-	@CacheEvict(cacheNames = "products", allEntries = true)
+	@CacheEvict(allEntries = true)
 	@RequestMapping(method = RequestMethod.DELETE, value = "/api/v1/products/{name}")
 	public void delete(@PathVariable("name") final String name) {
 
