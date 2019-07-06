@@ -22,7 +22,7 @@ security:
   oauth2:
     resource:
       jwt:
-        key-uri: http://localhost:8769/uaa/oauth/token_key
+        key-uri: https://localhost:8769/uaa/oauth/token_key
       id: openid
       serviceId: ${PREFIX:}resource
       
